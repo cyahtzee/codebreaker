@@ -1,9 +1,10 @@
 #!/usr/lib/env ruby
 # frozen_string_literal: true
 
-require_relative 'codebreaker/version'
-require_relative './codebreaker/entities/game'
-require_relative './codebreaker/entities/menu'
+require 'codebreaker/version'
+require 'codebreaker/game'
+# require 'codebreaker/modules/validator'
+# require 'codebreaker/modules/game_helper'
 
 module Codebreaker
   class Error < StandardError; end
