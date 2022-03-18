@@ -1,5 +1,6 @@
-#!/usr/lib/env ruby
 # frozen_string_literal: true
+
+# !/usr/lib/env ruby
 
 require 'codebreaker/version'
 require 'codebreaker/game'
