@@ -7,7 +7,7 @@ module Codebreaker
   class Game < Base
     include GameHelper
 
-    attr_reader :attempts, :hints, :name
+    attr_reader :attempts, :hints, :name, :stats, :difficulty
 
     DIFFICULTY = { easy: { attempts: 15, hints: 2 },
                    medium: { attempts: 10, hints: 1 },
@@ -17,6 +17,7 @@ module Codebreaker
       @stats = Stats.new
       @secret = generate_secret
       @name = params[:name]
+      @difficulty = params[:difficulty]
       @attempts = params[:attempts]
       @hints = params[:hints]
     end
@@ -26,7 +27,7 @@ module Codebreaker
       raise errors.join('\n') unless errors.empty?
     rescue RuntimeError => e
       puts e.message
-
+    else
       register_game_with_params(name, difficulty)
     end
 
@@ -42,8 +43,6 @@ module Codebreaker
         result
       end
     end
-
-    private
 
     def validate(name, difficulty)
       errors = []
