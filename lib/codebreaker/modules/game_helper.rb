@@ -23,23 +23,12 @@ module Codebreaker
       end
       encrypted.join
     end
-  end
 
-  def choose_difficulty(difficulty)
-    raise 'Wrong difficulty' unless DIFFICULTY.include?(difficulty)
-  rescue RuntimeError => e
-    puts e.message
-
-    case difficulty
-    when 'easy'
-      self.attempts = 15
-      self.hints = 2
-    when 'medium'
-      self.attempts = 10
-      self.hints = 1
-    when 'hell'
-      self.attempts = 5
-      self.hints = 1
+    def register_game_with_params(name, difficulty)
+      params = { name: name, difficulty: difficulty }
+      params[:attempts] = Game::DIFFICULTY[difficulty.to_sym][:attempts]
+      params[:hints] = Game::DIFFICULTY[difficulty.to_sym][:hints]
+      Game.new(**params)
     end
   end
 end

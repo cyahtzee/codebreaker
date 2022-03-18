@@ -23,8 +23,13 @@ module Codebreaker
         expect(@game.instance_variable_get(:@secret)).not_to be nil
       end
 
-      it 'instance variable @secret is not visible to outside' do
+      it 'has instance variable @secret taht is not visible to outside' do
         expect { @game.secret }.to raise_error(NoMethodError)
+      end
+
+      it 'sets instance variable hints and attempts' do
+        expect(@game.instance_variable_get(:@hints)).not_to be nil
+        expect(@game.instance_variable_get(:@attempts)).not_to be nil
       end
     end
   end

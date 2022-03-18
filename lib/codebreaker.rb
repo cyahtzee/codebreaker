@@ -3,8 +3,9 @@
 
 require 'codebreaker/version'
 require 'codebreaker/game'
-# require 'codebreaker/modules/validator'
-# require 'codebreaker/modules/game_helper'
+require 'codebreaker/guess'
+require 'codebreaker/base'
+require 'codebreaker/stats'
 
 module Codebreaker
   class Error < StandardError; end
