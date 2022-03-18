@@ -31,24 +31,50 @@ module Codebreaker
       register_game_with_params(name, difficulty)
     end
 
-    def make_guess(guess)
-      new_guess = Guess.new(guess)
-      errors = new_guess.validate(guess)
+    def make_guess(input)
+      new_guess = Guess.new(input)
+      errors = new_guess.validate(input)
       if errors.any?
         puts errors.join('\n')
       else
-        result = encrypt_secret(@secret, guess)
+        result = encrypt_secret(@secret, input)
         @stats.attempts += 1
         @stats.guesses << new_guess
         result
       end
     end
 
+    def check_win?(input)
+      input == @secret && @stats.attempts.size <= @attempts
+    end
+
+    def any_hints_left?
+      @stats.hints.size <= @hints
+    end
+
+    def give_hint
+      if any_hints_left?
+        hint = genretate_hint
+        @stats.hints << hint
+        hint
+      else
+        'You have no hints left'
+      end
+    end
+
+    private
+
     def validate(name, difficulty)
       errors = []
       errors << 'Invalid name' unless valid_name?(name)
       errors << 'Invalid difficulty' unless DIFFICULTY.key?(difficulty.to_sym)
       errors
+    end
+
+    def generate_hint
+      available_hints = @secret.dup.chars
+      index = rand(0..available_hints.size - 1)
+      available_hints.delete_at(index)
     end
   end
 end

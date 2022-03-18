@@ -5,9 +5,8 @@ module Codebreaker
     attr_accessor :attempts, :hints, :guesses
 
     def initialize
-      @attempts = 0
-      @hints = 0
-      @guesses = []
+      @attempts = []
+      @hints = []
     end
   end
 end

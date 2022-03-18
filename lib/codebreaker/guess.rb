@@ -4,15 +4,16 @@ require_relative './base'
 
 module Codebreaker
   class Guess < Base
-    attr_reader :guess
+    attr_reader :combination
 
-    def initialize(guess)
-      @guess = guess
+    def initialize(input)
+      @combination = input
     end
 
-    def validate(guess)
+
+    def validate(combination)
       errors = []
-      errors << 'Invalid guess' unless valid_guess?(guess)
+      errors << 'Invalid guess' unless valid_guess?(combination)
       errors
     end
   end
