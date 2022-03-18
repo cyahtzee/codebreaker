@@ -20,11 +20,11 @@ module Codebreaker
 
     def valid_integers?(string, min = 0, max = 9)
       string.chars.all? do |char|
-        is_integer?(char) && char.to_i.between?(min, max)
+        integer?(char) && char.to_i.between?(min, max)
       end
     end
 
-    def is_integer?(char)
+    def integer?(char)
       Integer(char).is_a?(Integer)
     rescue ArgumentError
       false

@@ -7,21 +7,27 @@ module Codebreaker
   class Game
     include GameHelper
     include Validator
-    attr_reader :running
+    DIFFICULTY = %w[easy medium hell].freeze
 
     def initialize
       @secret = generate_secret
       @name ||= ''
       @guesses ||= []
-      @hints ||= []
-      @attempts ||= []
+      @hints ||= 0
+      @attempts ||= 0
     end
 
-    def generate_output(secret, guess)
+    def generate_output
       encrypt_secret(secret, guess)
     end
 
-    def generate_hint(secret)
+    def generate_hint
+      hint = secret.chars.sample
+      while @guesses.include? hint
+        hint = secret.chars.sample
+      end
+      @hints -= 1
+      hint
     end
 
     def make_guess(guess)
@@ -36,7 +42,8 @@ module Codebreaker
 
     def register_game
       game = Game.new
-      validate(name)
+      game.generate_secret
+      game.choose_difficulty(difficulty)
     end
   end
 end
