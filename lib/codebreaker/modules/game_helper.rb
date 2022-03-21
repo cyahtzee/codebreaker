@@ -25,10 +25,11 @@ module Codebreaker
     end
 
     def register_game_with_params(name, difficulty)
-      params = { name: name, difficulty: difficulty }
-      params[:attempts] = Game::DIFFICULTY[difficulty.to_sym][:attempts]
-      params[:hints] = Game::DIFFICULTY[difficulty.to_sym][:hints]
-      Game.new(**params)
+      self.name = name
+      self.difficulty = difficulty
+      self.attempts = Game::DIFFICULTY[difficulty.to_sym][:attempts]
+      self.hints = Game::DIFFICULTY[difficulty.to_sym][:hints]
+      self
     end
   end
 end

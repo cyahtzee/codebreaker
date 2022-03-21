@@ -7,26 +7,23 @@ module Codebreaker
   class Game < Base
     include GameHelper
 
-    attr_reader :attempts, :hints, :name, :stats, :difficulty
+    attr_accessor :attempts, :hints, :name, :stats, :difficulty
 
     DIFFICULTY = { easy: { attempts: 15, hints: 2 },
                    medium: { attempts: 10, hints: 1 },
                    hell: { attempts: 5, hints: 1 } }.freeze
 
-    def initialize(params = {})
+    def initialize
       @stats = Stats.new
       @secret = generate_secret
-      @name = params[:name]
-      @difficulty = params[:difficulty]
-      @attempts = params[:attempts]
-      @hints = params[:hints]
+      @available_hints = @secret.dup.chars
     end
 
     def register_game(name, difficulty)
       errors = validate(name, difficulty)
       raise errors.join('\n') unless errors.empty?
     rescue RuntimeError => e
-      puts e.message
+      e.message
     else
       register_game_with_params(name, difficulty)
     end
@@ -52,13 +49,13 @@ module Codebreaker
     end
 
     def give_hint
-      if any_hints_left?
-        hint = generate_hint
-        @stats.hints << hint
-        hint
-      else
-        RuntimeError.new('No hints left')
-      end
+      raise 'No hints left' unless any_hints_left?
+    rescue RuntimeError => e
+      e.message
+    else
+      hint = generate_hint
+      @stats.hints << hint
+      hint
     end
 
     private
@@ -71,9 +68,10 @@ module Codebreaker
     end
 
     def generate_hint
-      available_hints = @secret.dup.chars
-      index = rand(0..available_hints.size - 1)
-      available_hints.delete_at(index)
+      index = rand(0..@available_hints.size - 1)
+      hint = @available_hints.delete_at(index)
+      p "Hint: #{hint}"
+      hint
     end
   end
 end

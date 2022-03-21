@@ -2,6 +2,6 @@
 
 RSpec.describe Codebreaker do
   it 'has a version number' do
-    expect(Codebreaker::VERSION).not_to be nil
+    expect(Codebreaker::VERSION).not_to be_nil
   end
 end
