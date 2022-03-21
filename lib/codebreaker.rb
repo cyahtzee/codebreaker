@@ -9,5 +9,4 @@ require 'codebreaker/base'
 require 'codebreaker/stats'
 
 module Codebreaker
-  class Error < StandardError; end
 end

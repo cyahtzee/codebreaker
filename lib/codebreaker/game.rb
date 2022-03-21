@@ -38,8 +38,7 @@ module Codebreaker
         puts errors.join('\n')
       else
         result = encrypt_secret(@secret, input)
-        @stats.attempts += 1
-        @stats.guesses << new_guess
+        @stats.attempts << new_guess
         result
       end
     end
@@ -49,16 +48,16 @@ module Codebreaker
     end
 
     def any_hints_left?
-      @stats.hints.size <= @hints
+      @stats.hints.size < @hints
     end
 
     def give_hint
       if any_hints_left?
-        hint = genretate_hint
+        hint = generate_hint
         @stats.hints << hint
         hint
       else
-        'You have no hints left'
+        RuntimeError.new('No hints left')
       end
     end
 
