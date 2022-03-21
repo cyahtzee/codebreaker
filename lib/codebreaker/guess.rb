@@ -10,7 +10,6 @@ module Codebreaker
       @combination = input
     end
 
-
     def validate(combination)
       errors = []
       errors << 'Invalid guess' unless valid_guess?(combination)

@@ -12,7 +12,7 @@ module Codebreaker
       secret.length.times do |i|
         current = remaining.index(guess[i])
         if guess[i] == secret[i]
-          encrypted.last == '+' ? encrypted << '+' : encrypted.unshift('+')
+          encrypted.unshift('+')
           remaining.delete_at(current)
         elsif remaining.include?(guess[i])
           encrypted << '-'
