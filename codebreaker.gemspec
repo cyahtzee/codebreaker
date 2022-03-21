@@ -37,6 +37,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'fasterer'
   spec.add_dependency 'pry'
   spec.add_dependency 'rake'
+  spec.add_dependency 'rspec'
   spec.add_dependency 'rubocop'
   spec.add_dependency 'rubocop-rspec'
   spec.add_dependency 'simplecov'
