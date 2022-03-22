@@ -49,7 +49,7 @@ module Codebreaker
     end
 
     def give_hint
-      raise RuntimeError 'No hints left' unless any_hints_left?
+      raise ValidationError, I18n.t(:hint) unless any_hints_left?
 
       hint = generate_hint
       @stats.hints << hint
@@ -61,8 +61,8 @@ module Codebreaker
     def validate(name, difficulty)
       length = NAME_PARAMS[:length]
       errors = []
-      errors << "Name should be from #{length.first} to #{length.last} long" unless valid_name?(name, length)
-      errors << "Choose a difficulty #{DIFFICULTY.keys}" unless DIFFICULTY.key?(difficulty.to_sym)
+      errors << I18n.t(:invalid_name, min: length.first, max: length.last) unless valid_name?(name)
+      errors << I18n.t(:invalid_difficulty, difficulty: DIFFICULTY.keys) unless DIFFICULTY.key?(difficulty.to_sym)
       errors
     end
 

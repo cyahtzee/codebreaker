@@ -1,0 +1,5 @@
+en:
+  hint: 'No hints left'
+  invalid_name: "Name should be at least %(min) and at most %(max) charachters long"
+  invalid_difficulty: "Choose a difficulty from the list %(difficulty)"
+  invalid_guess: "Guess should be a %{digit_count} digit number between %{range}"

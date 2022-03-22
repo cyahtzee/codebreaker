@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 RSpec.describe Codebreaker::Game do
   subject(:new_game) { described_class.new.register_game('John', 'easy') }
 
@@ -17,13 +16,13 @@ RSpec.describe Codebreaker::Game do
 
     context 'when there are hints left' do
       it 'returns a hint' do
-        expect(new_game.give_hint).to match(/[1-6]/)
+        expect(:hint).to match(/[1-6]/)
       end
     end
 
     context 'when there are no hints left' do
-      it 'raises a RuntimeError' do
-        expect { new_game.give_hint }.to raise_error(RuntimeError)
+      it 'raises a ValidationError' do
+        expect { new_game.give_hint }.to raise_error(Codebreaker::ValidationError)
       end
     end
   end

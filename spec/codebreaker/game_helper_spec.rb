@@ -4,6 +4,12 @@ module Codebreaker
   RSpec.describe Codebreaker::GameHelper do
     let(:game_helper) { Game.new }
 
+    describe '#register_game' do
+    end
+
+    describe '#generate_secret' do
+    end
+
     describe '#encrypt_secret' do
       it 'returns empty string if secret is empty' do
         expect(game_helper.encrypt_secret('', '1234')).to eq ''

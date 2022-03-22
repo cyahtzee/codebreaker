@@ -36,6 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'bundler'
   spec.add_dependency 'fasterer'
   spec.add_dependency 'ffaker'
+  spec.add_dependency 'i18n'
   spec.add_dependency 'pry'
   spec.add_dependency 'rake'
   spec.add_dependency 'rspec'

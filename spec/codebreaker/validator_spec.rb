@@ -31,21 +31,21 @@ RSpec.describe Codebreaker::Validator do
       expected_length = Codebreaker::Game::SECRET_PARAMS[:length].last
       expect(combination.length).to eq expected_length
     end
-  end
 
-  it 'returns false if guess is empty' do
-    expect(validator.valid_guess?('')).to be false
-  end
+    it 'returns false if guess is empty' do
+      expect(validator.valid_guess?('')).to be false
+    end
 
-  it 'returns false if guess is not a number' do
-    expect(validator.valid_guess?('a')).to be false
-  end
+    it 'returns false if guess is not a number' do
+      expect(validator.valid_guess?('a')).to be false
+    end
 
-  it 'returns false if guess is a special character' do
-    expect(validator.valid_guess?('#')).to be false
-  end
+    it 'returns false if guess is a special character' do
+      expect(validator.valid_guess?('#')).to be false
+    end
 
-  it 'returns false if guess is a math symbol' do
-    expect(validator.valid_guess?('+')).to be false
+    it 'returns false if guess is a math symbol' do
+      expect(validator.valid_guess?('+')).to be false
+    end
   end
 end
