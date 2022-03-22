@@ -2,7 +2,7 @@
 
 module Codebreaker
   class Stats
-    attr_accessor :attempts, :hints, :guesses
+    attr_accessor :attempts, :hints
 
     def initialize
       @attempts = []

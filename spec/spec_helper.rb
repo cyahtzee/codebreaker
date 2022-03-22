@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'codebreaker'
+require 'ffaker'
 require 'simplecov'
 
 SimpleCov.start

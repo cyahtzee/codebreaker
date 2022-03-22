@@ -3,24 +3,24 @@
 module Codebreaker
   module Validator
     def valid_name?(name)
-      valid_string?(name) && valid_length?(name, 3, 20)
+      valid_string?(name) && valid_length?(name)
     end
 
     def valid_guess?(guess)
-      valid_integers?(guess) && valid_length?(guess, 4, 4)
+      valid_integers?(guess) && valid_length?(guess)
     end
 
     def valid_string?(string)
       !string.empty? && !string.nil?
     end
 
-    def valid_length?(name, min, max)
-      name.length.between?(min, max)
+    def valid_length?(string, range = Codebreaker::Game::NAME_PARAMS[:length])
+      string.length.between?(range.first, range.last)
     end
 
-    def valid_integers?(string, min = 0, max = 9)
-      string.chars.all? do |char|
-        integer?(char) && char.to_i.between?(min, max)
+    def valid_integers?(combination, range = Codebreaker::Game::SECRET_PARAMS[:digits])
+      combination.chars.all? do |char|
+        integer?(char) && char.to_i.between?(range.first, range.last)
       end
     end
 

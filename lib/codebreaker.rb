@@ -9,4 +9,5 @@ require 'codebreaker/base'
 require 'codebreaker/stats'
 
 module Codebreaker
+  class ValidationError < StandardError; end
 end

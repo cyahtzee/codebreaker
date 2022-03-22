@@ -10,6 +10,8 @@ module Codebreaker
       raise NotImplementedError
     end
 
+    private
+
     def validate
       raise NotImplementedError
     end

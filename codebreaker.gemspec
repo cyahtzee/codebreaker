@@ -35,6 +35,7 @@ Gem::Specification.new do |spec|
   # Uncomment to register a new dependency of your gem
   spec.add_dependency 'bundler'
   spec.add_dependency 'fasterer'
+  spec.add_dependency 'ffaker'
   spec.add_dependency 'pry'
   spec.add_dependency 'rake'
   spec.add_dependency 'rspec'

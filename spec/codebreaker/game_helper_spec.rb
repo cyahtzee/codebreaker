@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Codebreaker
-  RSpec.describe GameHelper do
+  RSpec.describe Codebreaker::GameHelper do
     let(:game_helper) { Game.new }
 
     describe '#encrypt_secret' do

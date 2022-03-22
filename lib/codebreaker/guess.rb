@@ -11,8 +11,11 @@ module Codebreaker
     end
 
     def validate(combination)
+      length = Game::SECRET_PARAMS[:length]
+      digits = Game::SECRET_PARAMS[:digits]
+      error = "Guess should be a #{range.last} digit number between #{digits}"
       errors = []
-      errors << 'Invalid guess' unless valid_guess?(combination)
+      errors << error unless valid_guess?(combination, digits, length)
       errors
     end
   end
