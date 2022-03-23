@@ -7,7 +7,7 @@ module Codebreaker
     end
 
     def valid_guess?(guess)
-      valid_integers?(guess) && valid_length?(guess)
+      valid_integers?(guess) && guess.length == Codebreaker::Game::SECRET_PARAMS[:length].last
     end
 
     def valid_string?(string)

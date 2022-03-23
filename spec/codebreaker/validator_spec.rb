@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe Codebreaker::Validator do
+  let(:secret_length) { Codebreaker::Game::SECRET_PARAMS[:length] }
+  let(:name_length) { Codebreaker::Game::NAME_PARAMS[:length] }
   let(:validator) { Codebreaker::Game.new }
   let(:name) do
     length = Codebreaker::Game::NAME_PARAMS[:length]
@@ -20,6 +22,10 @@ RSpec.describe Codebreaker::Validator do
     it 'returns false if name is empty' do
       expect(validator.valid_name?('')).to be false
     end
+
+    it "returns false if name is longer than #{Codebreaker::Game::NAME_PARAMS[:length].last}" do
+      expect(validator.valid_name?(name * secret_length.last)).to be false
+    end
   end
 
   describe '#valid_guess?' do
@@ -28,8 +34,7 @@ RSpec.describe Codebreaker::Validator do
     end
 
     it "returns true if guess has #{Codebreaker::Game::SECRET_PARAMS[:length]} digits" do
-      expected_length = Codebreaker::Game::SECRET_PARAMS[:length].last
-      expect(combination.length).to eq expected_length
+      expect(combination.length).to be_between(secret_length.first, secret_length.last)
     end
 
     it 'returns false if guess is empty' do
@@ -40,12 +45,16 @@ RSpec.describe Codebreaker::Validator do
       expect(validator.valid_guess?('a')).to be false
     end
 
-    it 'returns false if guess is a special character' do
+    it 'returns false if guess has a special character' do
       expect(validator.valid_guess?('#')).to be false
     end
 
-    it 'returns false if guess is a math symbol' do
+    it 'returns false if guess has a math symbol' do
       expect(validator.valid_guess?('+')).to be false
+    end
+
+    it 'returns false if guess has a white space charachter' do
+      expect(validator.valid_guess?('\t')).to be false
     end
   end
 end

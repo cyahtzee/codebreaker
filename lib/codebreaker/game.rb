@@ -31,6 +31,7 @@ module Codebreaker
     end
 
     def make_guess(input)
+      alert_unregistered_game
       new_guess = Guess.new(input)
       errors = new_guess.validate(input)
       raise Codebreaker::ValidationError, errors.join('\n') if errors.any?
@@ -41,14 +42,17 @@ module Codebreaker
     end
 
     def check_win?(input)
+      alert_unregistered_game
       input == @secret && @stats.attempts.size <= @attempts
     end
 
     def any_hints_left?
+      alert_unregistered_game
       @stats.hints.size < @hints
     end
 
     def give_hint
+      alert_unregistered_game
       raise ValidationError, I18n.t(:hint) unless any_hints_left?
 
       hint = generate_hint
@@ -57,6 +61,10 @@ module Codebreaker
     end
 
     private
+
+    def alert_unregistered_game
+      raise Codebreaker::ValidationError, I18n.t(:unregistered_game) if difficulty.nil?
+    end
 
     def validate(name, difficulty)
       length = NAME_PARAMS[:length]
