@@ -12,7 +12,8 @@ module Codebreaker
         end
 
         it "has a secret that has #{Codebreaker::Game::SECRET_PARAMS[:length].last} digits" do
-          expect(registered_game.instance_variable_get(:@secret).length).to eq(Codebreaker::Game::SECRET_PARAMS[:length].last)
+          length = Codebreaker::Game::SECRET_PARAMS[:length].last
+          expect(registered_game.instance_variable_get(:@secret).length).to eq(length)
         end
 
         it 'has a name' do

@@ -40,7 +40,7 @@ RSpec.describe Codebreaker::Game do
       end
 
       it 'increase the number of hints in stats' do
-        expect { registered_game.give_hint}.to change { registered_game.stats.hints.size }.by(1)
+        expect { registered_game.give_hint }.to change { registered_game.stats.hints.size }.by(1)
       end
 
       it 'returns a digit from secret and adds to the hints array' do
