@@ -59,8 +59,8 @@ RSpec.describe Codebreaker::Game do
     let(:current_hint) { registered_game.give_hint }
 
     context 'when there are hints left' do
-      it "returns one digit in range #{Codebreaker::Game::SECRET_DIGITS}" do
-        expect(registered_game.give_hint).to match(/[1-6]{1}/)
+      it "returns a hint within #{Codebreaker::Game::SECRET_DIGITS}" do
+        expect(secret).to include(current_hint)
       end
 
       it 'increase the number of hints in stats' do
@@ -77,6 +77,12 @@ RSpec.describe Codebreaker::Game do
 
       it 'raises a ActionNotAvailable error' do
         expect { registered_game.give_hint }.to raise_error(Codebreaker::ActionNotAvailable)
+      end
+    end
+
+    describe '#check_win?' do
+      it 'returns true when secret is equal to guess' do
+        expect(registered_game.check_win?(secret)).to be true
       end
     end
   end
