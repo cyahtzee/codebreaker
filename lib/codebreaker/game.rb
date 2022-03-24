@@ -13,9 +13,11 @@ module Codebreaker
                    medium: { attempts: 10, hints: 1 },
                    hell: { attempts: 5, hints: 1 } }.freeze
 
-    SECRET_PARAMS = { digits: (1..6), length: (1..4) }.freeze
+    SECRET_DIGITS = 1..6
 
-    NAME_PARAMS = { length: (3..20) }.freeze
+    SECRET_LENGTH = 4
+
+    NAME_LENGTH_RANGE = 3..10
 
     def initialize
       @stats = Stats.new
@@ -34,6 +36,7 @@ module Codebreaker
       alert_unregistered_game
       new_guess = Guess.new(input)
       errors = new_guess.validate(input)
+      raise Codebreaker::ActionNotAvailable, I18n.t(:no_attempts) if @stats.attempts.size > @attempts
       raise Codebreaker::ValidationError, errors.join('\n') if errors.any?
 
       result = encrypt_secret(@secret, input)
@@ -53,7 +56,7 @@ module Codebreaker
 
     def give_hint
       alert_unregistered_game
-      raise ValidationError, I18n.t(:hint) unless any_hints_left?
+      raise Codebreaker::ActionNotAvailable, I18n.t(:hint) unless any_hints_left?
 
       hint = generate_hint
       @stats.hints << hint
@@ -63,13 +66,16 @@ module Codebreaker
     private
 
     def alert_unregistered_game
-      raise Codebreaker::ValidationError, I18n.t(:unregistered_game) if difficulty.nil?
+      raise Codebreaker::GameNotExistError, I18n.t(:unregistered_game) if difficulty.nil?
     end
 
     def validate(name, difficulty)
-      length = NAME_PARAMS[:length]
       errors = []
-      errors << I18n.t(:invalid_name, min: length.first, max: length.last) unless valid_name?(name)
+      unless valid_name?(name)
+        errors << I18n.t(:invalid_name,
+                         min: NAME_LENGTH_RANGE.first,
+                         max: NAME_LENGTH_RANGE.last)
+      end
       errors << I18n.t(:invalid_difficulty, difficulty: DIFFICULTY.keys) unless DIFFICULTY.key?(difficulty.to_sym)
       errors
     end

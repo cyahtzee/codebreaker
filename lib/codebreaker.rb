@@ -12,4 +12,6 @@ require_relative 'codebreaker/config/i18n'
 
 module Codebreaker
   class ValidationError < StandardError; end
+  class GameNotExistError < StandardError; end
+  class ActionNotAvailable < StandardError; end
 end

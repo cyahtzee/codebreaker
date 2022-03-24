@@ -4,3 +4,4 @@ ru:
   invalid_difficulty: "Выбирите сложность из списка %(difficulty)"
   invalid_guess: "Ответ должен быть в виде %{digit_count} значного числа в промежутке %{range}"
   unregistered_game: "Игра не началась, #register_game чтобы начать игру"
+  no_attempts: "Попыток больше не осталось"

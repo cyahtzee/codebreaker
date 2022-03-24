@@ -11,9 +11,9 @@ module Codebreaker
     end
 
     def validate(combination)
-      length = Game::SECRET_PARAMS[:length]
-      digits = Game::SECRET_PARAMS[:digits]
-      error = I18n.t(:invalid_guess, digit_count: length.last, range: digits)
+      error = I18n.t(:invalid_guess,
+                     digit_count: Game::SECRET_LENGTH,
+                     range: Game::SECRET_DIGITS)
       errors = []
       errors << error unless valid_guess?(combination)
       errors

@@ -7,20 +7,20 @@ module Codebreaker
     end
 
     def valid_guess?(guess)
-      valid_integers?(guess) && guess.length == Codebreaker::Game::SECRET_PARAMS[:length].last
+      valid_integers?(guess) && guess.length == Codebreaker::Game::SECRET_LENGTH
     end
 
     def valid_string?(string)
       !string.empty? && !string.nil?
     end
 
-    def valid_length?(string, range = Codebreaker::Game::NAME_PARAMS[:length])
-      string.length.between?(range.first, range.last)
+    def valid_length?(string, range = Codebreaker::Game::NAME_LENGTH_RANGE)
+      range.include?(string.length)
     end
 
-    def valid_integers?(combination, range = Codebreaker::Game::SECRET_PARAMS[:digits])
+    def valid_integers?(combination, range = Codebreaker::Game::SECRET_DIGITS)
       combination.chars.all? do |char|
-        integer?(char) && char.to_i.between?(range.first, range.last)
+        integer?(char) && range.include?(char.to_i)
       end
     end
 

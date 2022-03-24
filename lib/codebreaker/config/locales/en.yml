@@ -4,3 +4,4 @@ en:
   invalid_difficulty: "Choose a difficulty from the list %(difficulty)"
   invalid_guess: "Guess should be a %{digit_count} digit number between %{range}"
   unregistered_game: "Game hasn't started yet, call #register_game to start playing"
+  no_attempts: "No more attempts left"

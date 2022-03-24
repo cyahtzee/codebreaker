@@ -3,7 +3,7 @@
 module Codebreaker
   module GameHelper
     def generate_secret
-      (Game::SECRET_PARAMS[:length]).map { rand(Game::SECRET_PARAMS[:digits]) }.join
+      Game::SECRET_LENGTH.times.map { rand(Game::SECRET_DIGITS) }.join
     end
 
     def encrypt_secret(secret, guess)
