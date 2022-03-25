@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'shared_examples'
+require 'validator_examples'
 
 RSpec.describe Codebreaker::GameHelper do
   include_examples 'codebreaker'
@@ -8,8 +9,8 @@ RSpec.describe Codebreaker::GameHelper do
   describe '#register_game' do
     context 'when game is registered' do
       it "has a secret that has #{Codebreaker::Game::SECRET_LENGTH} digits" do
-        length = Codebreaker::Game::SECRET_LENGTH
-        expect(registered_game.instance_variable_get(:@secret)).to match(/[1-6]{#{length}}$/)
+        stub_const('SECRET_LENGTH', Codebreaker::Game::SECRET_LENGTH)
+        expect(registered_game.instance_variable_get(:@secret)).to match(/[1-6]{#{SECRET_LENGTH}}$/)
       end
 
       it 'has a name' do
@@ -36,37 +37,15 @@ RSpec.describe Codebreaker::GameHelper do
 
   describe '#encrypt_secret' do
     context 'when called with valid string' do
-      it 'returns empty string if secret is empty' do
-        expect(registered_game.encrypt_secret('', '1234')).to eq ''
-      end
-
-      it 'returns ++-- when secret code: 6543 and guess: 5643' do
-        expect(registered_game.encrypt_secret('6543', '5643')).to eq '++--'
-      end
-
-      it 'returns +- when secret code: 6543 and guess: 6411' do
-        expect(registered_game.encrypt_secret('6543', '6411')).to eq '+-'
-      end
-
-      it 'returns +++ when secret code: 6543 and guess: 6544' do
-        expect(registered_game.encrypt_secret('6543', '6544')).to eq '+++'
-      end
-
-      it 'returns ---- when secret code: 6543 and guess: 3456' do
-        expect(registered_game.encrypt_secret('6543', '3456')).to eq '----'
-      end
-
-      it 'returns + when secret code: 6543 and guess: 6666' do
-        expect(registered_game.encrypt_secret('6543', '6666')).to eq '+'
-      end
-
-      it 'returns - when secret code: 6543 and guess: 2666' do
-        expect(registered_game.encrypt_secret('6543', '2666')).to eq '-'
-      end
-
-      it 'returns \'\' when secret code: 6543 and guess: 2222' do
-        expect(registered_game.encrypt_secret('6543', '2222')).to eq ''
-      end
+      it_behaves_like 'cypher', { secret: '1234', guess: '1234', cypher: '++++' }
+      it_behaves_like 'cypher', { secret: '', guess: '1234', cypher: '' }
+      it_behaves_like 'cypher', { secret: '6543', guess: '5643', cypher: '++--' }
+      it_behaves_like 'cypher', { secret: '6543', guess: '6411', cypher: '+-' }
+      it_behaves_like 'cypher', { secret: '6543', guess: '6544', cypher: '+++' }
+      it_behaves_like 'cypher', { secret: '6543', guess: '3456', cypher: '----' }
+      it_behaves_like 'cypher', { secret: '6543', guess: '6666', cypher: '+' }
+      it_behaves_like 'cypher', { secret: '6543', guess: '2666', cypher: '-' }
+      it_behaves_like 'cypher', { secret: '6543', guess: '2222', cypher: '' }
     end
   end
 end

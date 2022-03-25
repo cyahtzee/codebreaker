@@ -2,7 +2,7 @@ Metrics/BlockLength:
   IgnoredMethods: ['describe', 'context']
 
 AllCops:
-    NewCops: enable
+  NewCops: enable
 
 Metrics/MethodLength:
   Max: 15

@@ -3,13 +3,13 @@
 RSpec.describe Codebreaker::Validator do
   let(:validator) { Codebreaker::Game.new }
   let(:name) do
-    length = Codebreaker::Game::NAME_LENGTH_RANGE
-    FFaker::Name.unique.name[0...length.last]
+    stub_const('NAME_LENGTH_RANGE', Codebreaker::Game::NAME_LENGTH_RANGE)
+    FFaker::Name.unique.name[0...NAME_LENGTH_RANGE.last]
   end
   let(:combination) do
-    digits = Codebreaker::Game::SECRET_DIGITS
-    length = Codebreaker::Game::SECRET_LENGTH
-    length.times.map { FFaker::Random.rand(digits) }.join
+    stub_const('SECRET_DIGITS', Codebreaker::Game::SECRET_DIGITS)
+    stub_const('SECRET_LENGTH', Codebreaker::Game::SECRET_LENGTH)
+    SECRET_LENGTH.times.map { FFaker::Random.rand(SECRET_DIGITS) }.join
   end
 
   describe '#valid_name?' do
@@ -22,7 +22,7 @@ RSpec.describe Codebreaker::Validator do
     end
 
     it "returns false if name is longer than #{Codebreaker::Game::NAME_LENGTH_RANGE.last}" do
-      expect(validator.valid_name?('a' * Codebreaker::Game::NAME_LENGTH_RANGE.last.next)).to be false
+      expect(validator.valid_name?('a' * name.length.next)).to be false
     end
   end
 
