@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'shared_examples'
+require 'validator_examples'
 
 RSpec.describe Codebreaker::Game do
   include_examples 'codebreaker'
@@ -33,24 +34,24 @@ RSpec.describe Codebreaker::Game do
     end
 
     context 'when game is not registered' do
-      it 'raises a GameNotExistError when make_guess' do
-        expect { invalid_game.make_guess('1234') }.to raise_error(Codebreaker::GameNotExistError)
+      it_behaves_like 'not registered game', 'make_guess' do
+        let(:expected) { invalid_game.make_guess('1234') }
       end
 
-      it 'raises a GameNotExistError when making guess with empty string' do
-        expect { invalid_game.make_guess('') }.to raise_error(Codebreaker::GameNotExistError)
+      it_behaves_like 'not registered game', "make_guess(' ')" do
+        let(:expected) { invalid_game.make_guess('') }
       end
 
-      it 'raises a GameNotExistError when #any_hints_left?' do
-        expect { invalid_game.any_hints_left? }.to raise_error(Codebreaker::GameNotExistError)
+      it_behaves_like 'not registered game', 'any_hints_left?' do
+        let(:expected) { invalid_game.any_hints_left? }
       end
 
-      it 'raises a GameNotExistError when #check_win?' do
-        expect { invalid_game.check_win?(guess) }.to raise_error(Codebreaker::GameNotExistError)
+      it_behaves_like 'not registered game', 'check_win?' do
+        let(:expected) { invalid_game.check_win?(guess) }
       end
 
-      it 'raises a GameNotExistError when #give_hint' do
-        expect { invalid_game.give_hint }.to raise_error(Codebreaker::GameNotExistError)
+      it_behaves_like 'not registered game', 'give_hint' do
+        let(:expected) { invalid_game.give_hint }
       end
     end
   end

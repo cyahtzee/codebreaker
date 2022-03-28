@@ -1,37 +1,17 @@
 # frozen_string_literal: true
 
-require 'shared_examples'
 require 'validator_examples'
 
 RSpec.describe Codebreaker::GameHelper do
-  include_examples 'codebreaker'
-
   describe '#register_game' do
     context 'when game is registered' do
-      it "has a secret that has #{Codebreaker::Game::SECRET_LENGTH} digits" do
-        stub_const('SECRET_LENGTH', Codebreaker::Game::SECRET_LENGTH)
-        expect(registered_game.instance_variable_get(:@secret)).to match(/[1-6]{#{SECRET_LENGTH}}$/)
-      end
-
-      it 'has a name' do
-        expect(registered_game.name).to eq(name)
-      end
-
-      it 'has a difficulty' do
-        expect(registered_game.difficulty).to eq(difficulty)
-      end
-
-      it 'has a valid difficulty' do
-        expect(Codebreaker::Game::DIFFICULTY.keys).to include(difficulty.to_sym)
-      end
-
-      it 'has a number of attempts' do
-        expect(registered_game.attempts).to eq(Codebreaker::Game::DIFFICULTY[:easy][:attempts])
-      end
-
-      it 'has a number of hints' do
-        expect(registered_game.hints).to eq(Codebreaker::Game::DIFFICULTY[:easy][:hints])
-      end
+      it_behaves_like 'registered game', { name: 'Game',
+                                           difficulty: 'easy',
+                                           name_length: Codebreaker::Game::NAME_LENGTH_RANGE.last,
+                                           secret_digits: Codebreaker::Game::SECRET_DIGITS,
+                                           secret_length: Codebreaker::Game::SECRET_LENGTH,
+                                           hints: Codebreaker::Game::DIFFICULTY[:easy][:hints],
+                                           attempts: Codebreaker::Game::DIFFICULTY[:easy][:attempts] }
     end
   end
 
