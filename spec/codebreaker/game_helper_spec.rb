@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'validator_examples'
+require 'shared_examples'
 
 RSpec.describe Codebreaker::GameHelper do
   describe '#register_game' do
