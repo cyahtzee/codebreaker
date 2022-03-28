@@ -16,6 +16,7 @@ end
 
 RSpec.shared_examples 'registered game' do |params|
   before { registered_game.instance_variable_set(:@secret, '1234') }
+
   let(:registered_game) { Codebreaker::Game.new.register_game('Game', 'easy') }
   it "has a secret that has #{params[:secret_length]} digits" do
     expect(registered_game.instance_variable_get(:@secret).length).to eq(params[:secret_length])

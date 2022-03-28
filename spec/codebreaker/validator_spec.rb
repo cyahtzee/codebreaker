@@ -3,13 +3,14 @@
 RSpec.describe Codebreaker::Validator do
   let(:validator) { Codebreaker::Game.new }
   let(:name) do
-    stub_const('NAME_LENGTH_RANGE', Codebreaker::Game::NAME_LENGTH_RANGE)
-    FFaker::Name.unique.name[0...NAME_LENGTH_RANGE.last]
+    FFaker::Name.unique.name[0...Codebreaker::Game::NAME_LENGTH_RANGE.last]
   end
   let(:combination) do
-    stub_const('SECRET_DIGITS', Codebreaker::Game::SECRET_DIGITS)
-    stub_const('SECRET_LENGTH', Codebreaker::Game::SECRET_LENGTH)
-    SECRET_LENGTH.times.map { FFaker::Random.rand(SECRET_DIGITS) }.join
+    Codebreaker::Game::SECRET_LENGTH
+      .times
+      .map do
+      FFaker::Random.rand(Codebreaker::Game::SECRET_DIGITS)
+    end.join
   end
 
   describe '#valid_name?' do

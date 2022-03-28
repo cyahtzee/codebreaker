@@ -4,8 +4,9 @@ require 'shared_examples'
 
 RSpec.describe Codebreaker::Game do
   before { registered_game.instance_variable_set(:@secret, '1234') }
+
   let(:long_word) { 'a' * Codebreaker::Game::SECRET_LENGTH.next }
-  let(:registered_game) { Codebreaker::Game.new.register_game('Game', 'easy') }
+  let(:registered_game) { described_class.new.register_game('Game', 'easy') }
   let(:guess) { '1234' }
 
   describe '#make_guess' do
@@ -32,7 +33,8 @@ RSpec.describe Codebreaker::Game do
   end
 
   context 'when game is not registered' do
-    let(:invalid_game) { Codebreaker::Game.new }
+    let(:invalid_game) { described_class.new }
+
     it_behaves_like 'not registered game', 'make_guess' do
       let(:expected) { invalid_game.make_guess(guess) }
     end
