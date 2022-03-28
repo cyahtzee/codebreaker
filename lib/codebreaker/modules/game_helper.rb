@@ -13,13 +13,12 @@ module Codebreaker
         current = remaining.index(guess[i])
         if guess[i] == secret[i]
           encrypted.unshift('+')
-          remaining.delete_at(current)
         elsif remaining.include?(guess[i])
           encrypted << '-'
-          remaining.delete_at(current)
         else
           encrypted << ''
         end
+        remaining.delete_at(current) if current
       end
       encrypted.join
     end
