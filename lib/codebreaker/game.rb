@@ -36,7 +36,7 @@ module Codebreaker
       alert_unregistered_game
       new_guess = Guess.new(input)
       errors = new_guess.validate(input)
-      raise Codebreaker::ActionNotAvailable, I18n.t(:no_attempts) if check_lost?(input)
+      raise Codebreaker::ActionNotAvailable, I18n.t(:no_attempts) if @stats.attempts.size >= @attempts
       raise Codebreaker::ValidationError, errors.join('\n') if errors.any?
 
       result = encrypt_secret(@secret, input)
@@ -47,10 +47,6 @@ module Codebreaker
     def check_win?(input)
       alert_unregistered_game
       input == @secret && @stats.attempts.size <= @attempts
-    end
-
-    def check_lost?
-      @stats.attempts.size >= @attempts && !check_win?(input)
     end
 
     def any_hints_left?

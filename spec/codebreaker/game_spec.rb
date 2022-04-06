@@ -26,7 +26,7 @@ RSpec.describe Codebreaker::Game do
 
     context 'when no attempts left' do
       it 'raise a ActionNotAvailable when no attempt left' do
-        registered_game.attempts.next.times { registered_game.make_guess(guess) }
+        registered_game.attempts.times { registered_game.make_guess(guess) }
         expect { registered_game.make_guess(guess) }.to raise_error(Codebreaker::ActionNotAvailable)
       end
     end
