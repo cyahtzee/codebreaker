@@ -1,8 +1,17 @@
 # frozen_string_literal: true
 
-require_relative "codebreaker/version"
+# !/usr/lib/env ruby
+
+require 'i18n'
+require 'codebreaker/version'
+require 'codebreaker/game'
+require 'codebreaker/guess'
+require 'codebreaker/base'
+require 'codebreaker/stats'
+require_relative 'codebreaker/config/i18n'
 
 module Codebreaker
-  class Error < StandardError; end
-  # Your code goes here...
+  class ValidationError < StandardError; end
+  class GameNotExistError < StandardError; end
+  class ActionNotAvailable < StandardError; end
 end
